@@ -12,34 +12,50 @@
 # Darren Coxall <darren@darrencoxall.com>
 #
 class golang (
-  $version = "1.1.2",
-  $workspace = "/vagrant",
+  $version      = "1.1.2",
+  $workspace    = "/vagrant",
+  $arch         = "linux-amd64",
+  $download_dir = "/usr/local/src",
+  $download_url = undef,
 ) {
 
-  exec { "download-golang":
-    command => "/usr/bin/wget -O /usr/local/src/go$version.linux-amd64.tar.gz https://go.googlecode.com/files/go$version.linux-amd64.tar.gz",
-    creates => "/usr/local/src/go$version.linux-amd64.tar.gz"
+  if ($download_url) {
+    $download_location = $download_url
+  } else {
+    $download_location = "https://go.googlecode.com/files/go$version.$arch.tar.gz"
   }
 
-  exec { "remove-previous-version":
-    command => "/bin/rm -r /usr/local/go",
-    onlyif  => "/usr/bin/test -d /usr/local/go",
-    before  => Exec["unarchive-golang-tools"]
+  Exec {
+    path => "/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin",
   }
 
-  exec { "unarchive-golang-tools":
-    command => "/bin/tar -C /usr/local -xzf /usr/local/src/go$version.linux-amd64.tar.gz",
-    require => Exec["download-golang"]
+  package { ["curl", "mercurial"]: }
+
+  exec { "download":
+    command => "curl -o $download_dir/go-$version.tar.gz $download_location",
+    creates => "$download_dir/go-$version.tar.gz",
+    unless  => "which go && go version | grep '$version'",
+    require => Package["curl"],
+  } ->
+  exec { "unarchive":
+    command => "tar -C /usr/local -xzf $download_dir/go-$version.tar.gz && rm $download_dir/go-$version.tar.gz",
+    onlyif  => "test -f $download_dir/go-$version.tar.gz",
   }
 
-  exec { "setup-path":
-    command => "/bin/echo 'export PATH=$workspace/bin:/usr/local/go/bin:\$PATH' >> /home/vagrant/.profile",
-    unless  => "/bin/grep -q /usr/local/go /home/vagrant/.profile ; /usr/bin/test $? -eq 0"
+  exec { "remove-previous":
+    command => "rm -r /usr/local/go",
+    onlyif  => [
+      "test -d /usr/local/go",
+      "which go && test `go version | cut -d' ' -f 3` != 'go$version'",
+    ],
+    before  => Exec["unarchive"],
   }
 
-  exec { "setup-workspace":
-    command => "/bin/echo 'export GOPATH=$workspace' >> /home/vagrant/.profile",
-    unless  => "/bin/grep -q 'GOPATH=$workspace' /home/vagrant/.profile ; /usr/bin/test $? -eq 0"
+  file { "/etc/profile.d/golang.sh":
+    content => template("golang/golang.sh.erb"),
+    owner   => root,
+    group   => root,
+    mode    => "a+x",
   }
 
 }
