@@ -1,7 +1,8 @@
 name    'dcoxall-golang'
-version '1.0.0'
+version '1.0.1'
 source 'https://github.com/FreakyDazio/dcoxall-golang'
 author 'Darren Coxall'
+license 'MIT'
 
 summary 'A barebones Go installation'
 description 'A barebones Go installation'
