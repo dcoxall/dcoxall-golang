@@ -29,7 +29,13 @@ class golang (
     path => "/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin",
   }
 
-  package { ["curl", "mercurial"]: }
+  if ! defined(Package['curl']) {
+    package { "curl": }
+  }
+
+  if ! defined(Package['mercurial']) {
+    package { "mercurial": }
+  }
 
   exec { "download":
     command => "curl -o $download_dir/go-$version.tar.gz $download_location",
