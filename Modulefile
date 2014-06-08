@@ -1,5 +1,5 @@
 name    'dcoxall-golang'
-version '1.0.1'
+version '1.1.0'
 source 'https://github.com/FreakyDazio/dcoxall-golang'
 author 'Darren Coxall'
 license 'MIT'
