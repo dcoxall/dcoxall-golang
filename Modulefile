@@ -1,4 +1,4 @@
-name    'dcoxall-golang'
+name    'puppet-go'
 version '1.1.1'
 source 'https://github.com/imdario/puppet-go'
 author 'Dario Castañé'
