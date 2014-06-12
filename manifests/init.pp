@@ -10,19 +10,27 @@
 # === Authors
 #
 # Darren Coxall <darren@darrencoxall.com>
+# Dario Castañé <i@dario.im>
 #
+
 class golang (
-  $version      = "1.1.2",
-  $workspace    = "/vagrant",
-  $arch         = "linux-amd64",
+  $version      = "1.2.2",
+  $workspace    = "$HOME/.go",
   $download_dir = "/usr/local/src",
   $download_url = undef,
 ) {
 
+  $goarch = $::architecture ? {
+    'i386'  => '386',
+    default => $architecture,
+  }
+
+  $goos = downcase($::kernel)
+
   if ($download_url) {
     $download_location = $download_url
   } else {
-    $download_location = "https://storage.googleapis.com/golang/go${version}.linux-${architecture}.tar.gz"
+    $download_location = "https://storage.googleapis.com/golang/go${version}.${goos}-${goarch}.tar.gz"
   }
 
   Exec {
