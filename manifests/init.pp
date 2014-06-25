@@ -14,7 +14,7 @@
 #
 
 class golang (
-  $version      = "1.2.2",
+  $version      = "1.3",
   $workspace    = "$HOME/.go",
   $download_dir = "/usr/local/src",
   $download_url = undef,
