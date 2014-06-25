@@ -1,9 +1,9 @@
 name    'puppet-go'
-version '1.1.1'
+version '1.3'
 source 'https://github.com/imdario/puppet-go'
 author 'Dario Castañé'
 license 'MIT'
 
-summary 'A barebones Go installation'
-description 'A barebones Go installation'
+summary 'Automated Go install'
+description 'Automated Go install'
 project_page 'https://github.com/imdario/puppet-go'
