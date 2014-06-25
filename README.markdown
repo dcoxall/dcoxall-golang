@@ -1,4 +1,4 @@
-# Golang
+# Go
 Quickly and easily install the Go programming language with a customisable workspace and version.
 
 ## Usage
