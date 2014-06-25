@@ -36,7 +36,7 @@ There are still additional features which would make this module better:
 
 The MIT License (MIT)
 
-Copyright (c) 2013 Darren Coxall, Dario Castañé
+Copyright (c) 2014 Darren Coxall, Dario Castañé
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
