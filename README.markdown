@@ -6,7 +6,7 @@ In order to use this module do the following:
 
     class { 'golang': }
 
-This will install go 1.2.2 and setup your workspace in `$HOME/.go`. Your chosen workspace should include a `bin`, `pkg` and `src` directory. The golang module doesn't create these to avoid using the wrong permissions which can cause potential issues using commands like `go get`.
+This will install go 1.3 and setup your workspace in `$HOME/.go`. Your chosen workspace should include a `bin`, `pkg` and `src` directory. The golang module doesn't create these to avoid using the wrong permissions which can cause potential issues using commands like `go get`.
 
 ## Additional Options
 The golang module supports some additional options:
@@ -36,7 +36,7 @@ There are still additional features which would make this module better:
 
 The MIT License (MIT)
 
-Copyright (c) 2013 Darren Coxall
+Copyright (c) 2013 Darren Coxall, Dario Castañé
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
