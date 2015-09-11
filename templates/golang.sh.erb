@@ -1,3 +1,4 @@
 GOPATH="<%= @workspace %>"
-PATH="$GOPATH/bin:<%= @boxen_home %>/go/bin:$PATH"
-export GOPATH PATH
+GOROOT="<%= @boxen_home %>/go"
+PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
+export GOPATH PATH GOROOT
