@@ -72,6 +72,20 @@ class golang (
     before  => Exec['unarchive'],
   }
 
+  exec { 'remove-previous-version-file':
+    command => 'rm $HOME/.go-version',
+    onlyif  => [
+      "test -f $HOME/.go-version",
+    ],
+    before  => Exec['unarchive'],
+  }
+
+  exec { 'link_workspace':
+    command => "mkdir -p {$workspace}",
+    unless => "ls {$workspace}",
+    before  => Exec['unarchive'],
+  }
+
   file { "${::boxen_home}/env.d/20-go.sh":
     content => template('golang/golang.sh.erb'),
     mode    => 'a+x',
