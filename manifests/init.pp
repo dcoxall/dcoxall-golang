@@ -34,7 +34,7 @@ class golang (
   }
 
   Exec {
-    path => "/opt/boxen/go/bin:/usr/local/bin:/usr/bin:/bin",
+    path => "$BOXEN_HOME/go/bin:/usr/local/bin:/usr/bin:/bin",
   }
 
   if ! defined(Package['curl']) {
@@ -52,20 +52,27 @@ class golang (
     require => Package['curl'],
   } ->
   exec { 'unarchive':
-    command => "tar -C /opt/boxen -xzf ${download_dir}/go-${version}.tar.gz && rm ${download_dir}/go-${version}.tar.gz",
+    command => "tar -C $BOXEN_HOME -xzf ${download_dir}/go-${version}.tar.gz && rm ${download_dir}/go-${version}.tar.gz",
     onlyif  => "test -f ${download_dir}/go-${version}.tar.gz",
   }
 
-  exec { 'remove-previous':
-    command => 'rm -r /opt/boxen/go',
+  exec { 'remove-chgo':
+    command => "rm -r $BOXEN_HOME/chgo;rm -f $BOXEN_HOME/env.d/30_go.sh $BOXEN_HOME/env.d/99_chgo_auto.sh",
     onlyif  => [
-      "test -d /opt/boxen/go",
+      "test -d $BOXEN_HOME/chgo",
+    ],
+  }
+
+  exec { 'remove-previous':
+    command => 'rm -r $BOXEN_HOME/go',
+    onlyif  => [
+      "test -d $BOXEN_HOME/go",
       "which go && test `go version | cut -d' ' -f 3` != ' go${version} '",
     ],
     before  => Exec['unarchive'],
   }
 
-  file { "/opt/boxen/env.d/20-go.sh":
+  file { "$BOXEN_HOME/env.d/20-go.sh":
     content => template('golang/golang.sh.erb'),
     mode    => 'a+x',
   }
