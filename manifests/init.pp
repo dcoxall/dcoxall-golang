@@ -15,7 +15,7 @@
 
 class golang (
   $version      = "1.5.1",
-  $workspace    = "$HOME/.go",
+  $workspace    = "\$HOME/.go",
   $download_dir = "/tmp",
   $download_url = undef,
 ) {
