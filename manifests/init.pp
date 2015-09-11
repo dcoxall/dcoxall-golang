@@ -60,15 +60,13 @@ class golang (
     command => 'rm -r /usr/local/go',
     onlyif  => [
       'test -d /usr/local/go',
-      "which go && test `go version | cut -d' ' -f 3` != 'go${version}'",
+      "which go && test `go version | cut -d' ' -f 3` != ' go${version} '",
     ],
     before  => Exec['unarchive'],
   }
 
-  file { '/etc/profile.d/golang.sh':
+  file { "$HOME/golang.sh":
     content => template('golang/golang.sh.erb'),
-    owner   => root,
-    group   => root,
     mode    => 'a+x',
   }
 
