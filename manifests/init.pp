@@ -17,6 +17,7 @@ class golang (
   $arch         = 'linux-amd64',
   $download_dir = '/usr/local/src',
   $download_url = undef,
+  $download_timeout = 900,
 ) {
 
   if ($download_url) {
@@ -42,6 +43,7 @@ class golang (
     creates => "${download_dir}/go-${version}.tar.gz",
     unless  => "which go && go version | grep '${version}'",
     require => Package['curl'],
+    timeout => ${download_timeout},
   } ->
   exec { 'unarchive':
     command => "tar -C /usr/local -xzf ${download_dir}/go-${version}.tar.gz && rm ${download_dir}/go-${version}.tar.gz",
