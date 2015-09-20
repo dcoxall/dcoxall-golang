@@ -18,6 +18,7 @@ class golang (
   $workspace    = "\$HOME/.go",
   $download_dir = "/tmp",
   $download_url = undef,
+  $go_binaries = '',
 ) {
 
   $goarch = $::architecture ? {
