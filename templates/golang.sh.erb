@@ -2,14 +2,15 @@ GOPATH="<%= @workspace %>"
 GOROOT="<%= @boxen_home %>/go"
 PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 GO15VENDOREXPERIMENT=1
-export GOPATH PATH GOROOT GO15VENDOREXPERIMENT
+GO_BINARIES_TO_UPDATE="<%= go_binaries %>"
+export GOPATH PATH GOROOT GO15VENDOREXPERIMENT GO_BINARIES_TO_UPDATE
 
 # This function will run go get on every path defined by
 # go_binaries in order to update installed depdendant go
 # libaries
 function goupdate() {
   echo "Updating go binaries and placing them in $GOPATH/bin"
-  for GO_PATH in "<%= @go_binaries %>"; do
+  for GO_PATH in "$GO_BINARIES_TO_UPDATE"; do
     if [ -z "$GO_PATH" ]; then
       continue
     fi
