@@ -10,7 +10,7 @@ export GOPATH PATH GOROOT GO15VENDOREXPERIMENT GO_BINARIES_TO_UPDATE
 # libaries
 function goupdate() {
   echo "Updating go binaries and placing them in $GOPATH/bin"
-  for GO_PATH in "$GO_BINARIES_TO_UPDATE"; do
+  for GO_PATH in $GO_BINARIES_TO_UPDATE; do
     if [ -z "$GO_PATH" ]; then
       continue
     fi
