@@ -10,7 +10,11 @@ export GOPATH PATH GOROOT GO15VENDOREXPERIMENT
 function goupdate() {
   echo "Updating go binaries and placing them in $GOPATH/bin"
   for GO_PATH in "<%= @go_binaries %>"; do
-    go get -u "$GO_PATH"
+    if [ -z "$GO_PATH" ]; then
+      continue
+    fi
+    echo "Downloading $GO_PATH"
+    go get -v -u "$GO_PATH"
     if [ $? -ne 0 ]; then
       echo "Unable to update $GO_PATH"
     fi
