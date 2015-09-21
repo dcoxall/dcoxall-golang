@@ -83,10 +83,11 @@ class golang (
   file { "${::boxen_home}/bin/goupdate.sh":
     content => template('golang/goupdate.sh.erb'),
     mode    => 'a+x',
+    require => File["${::boxen_home}/env.d/20-go.sh"]
   }
 
   exec { 'update-libs':
-    command => "bash -c '. ${::boxen_home}/env.d/20-go.sh && env && ${::boxen_home}/bin/goupdate.sh'",
+    command => "bash -c '. ${::boxen_home}/env.d/20-go.sh && ${::boxen_home}/bin/goupdate.sh'",
     
     onlyif  => [
       "which go",
@@ -94,5 +95,6 @@ class golang (
       "test -f ${::boxen_home}/env.d/20-go.sh",
     ],
     logoutput => true,
+    require => File["${::boxen_home}/bin/goupdate.sh"]
   }
 }

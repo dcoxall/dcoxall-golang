@@ -1,7 +1,5 @@
 #!/bin/bash
 
-env > /tmp/env
-go env > /tmp/go_env
 echo "Updating go binaries and placing them in $GOPATH/bin"
 for GO_PATH in $GO_BINARIES_TO_UPDATE; do
   if [ -z "$GO_PATH" ]; then
