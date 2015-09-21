@@ -86,7 +86,7 @@ class golang (
   }
 
   exec { 'update-libs':
-    command => ". ${::boxen_home}/env.d/20-go.sh && ${::boxen_home}/bin/goupdate.sh",
+    command => "bash -c '${::boxen_home}/env.d/20-go.sh && ${::boxen_home}/bin/goupdate.sh'",
     onlyif  => [
       "which go",
       "test -f ${::boxen_home}/bin/goupdate.sh",
