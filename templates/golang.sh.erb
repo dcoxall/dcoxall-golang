@@ -2,5 +2,5 @@ GOPATH="<%= @workspace %>"
 GOROOT="<%= @boxen_home %>/go"
 PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 GO15VENDOREXPERIMENT=1
-GO_BINARIES_TO_UPDATE="<%= go_binaries %>"
+GO_BINARIES_TO_UPDATE="<%= @go_binaries %>"
 export GOPATH PATH GOROOT GO15VENDOREXPERIMENT GO_BINARIES_TO_UPDATE
