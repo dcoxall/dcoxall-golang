@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "Updating go binaries and placing them in $GOPATH/bin"
+for GO_PATH in $GO_BINARIES_TO_UPDATE; do
+  if [ -z "$GO_PATH" ]; then
+    continue
+  fi
+  echo "Downloading $GO_PATH"
+  go get -v -u "$GO_PATH"
+  if [ $? -ne 0 ]; then
+    echo "Unable to update $GO_PATH"
+  fi
+  done
+echo "Finished updating go binaries"

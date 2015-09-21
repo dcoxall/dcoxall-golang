@@ -74,16 +74,23 @@ class golang (
     before  => Exec['unarchive'],
   }
 
-  exec { 'update-libs':
-    command => "goupdate || true",
-    onlyif  => [
-      "which go",
-    ]
-  }
 
   file { "${::boxen_home}/env.d/20-go.sh":
     content => template('golang/golang.sh.erb'),
     mode    => 'a+x',
   }
 
+  file { "${::boxen_home}/bin/goupdate.sh":
+    content => template('golang/goupdate.sh.erb'),
+    mode    => 'a+x',
+  }
+
+  exec { 'update-libs':
+    command => "source ${::boxen_home}/env.d/20-go.sh && ${::boxen_home}/bin/goupdate.sh",
+    onlyif  => [
+      "which go",
+      "test -f ${::boxen_home}/bin/goupdate.sh",
+      "test -f ${::boxen_home}/env.d/20-go.sh",
+    ]
+  }
 }
