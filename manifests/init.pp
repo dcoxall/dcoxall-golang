@@ -86,11 +86,13 @@ class golang (
   }
 
   exec { 'update-libs':
-    command => "bash -c '. ${::boxen_home}/env.d/20-go.sh && ${::boxen_home}/bin/goupdate.sh'",
+    command => "bash -c '. ${::boxen_home}/env.d/20-go.sh && env && ${::boxen_home}/bin/goupdate.sh'",
+    
     onlyif  => [
       "which go",
       "test -f ${::boxen_home}/bin/goupdate.sh",
       "test -f ${::boxen_home}/env.d/20-go.sh",
-    ]
+    ],
+    logoutput => true,
   }
 }
