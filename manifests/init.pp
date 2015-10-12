@@ -11,6 +11,7 @@
 #
 # Darren Coxall <darren@darrencoxall.com>
 # Dario Castañé <i@dario.im>
+# TED Vortex    <ted.vortex@gmail.com>
 #
 
 class golang (
