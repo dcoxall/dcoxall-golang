@@ -59,9 +59,9 @@ class golang (
   }
 
   exec { 'remove-chgo':
-    command => "rm -r /usr/local//chgo;rm -f /usr/local//env.d/30_go.sh /usr/local//env.d/99_chgo_auto.sh",
+    command => "rm -r /usr/local/chgo;rm -f /usr/local/env.d/30_go.sh /usr/local/env.d/99_chgo_auto.sh",
     onlyif  => [
-      "test -d /usr/local//chgo",
+      "test -d /usr/local/chgo",
     ],
   }
 
@@ -75,19 +75,19 @@ class golang (
   }
 
 
-  file { "/usr/local//env.d/20-go.sh":
+  file { "/usr/local/env.d/20-go.sh":
     content => template('golang/golang.sh.erb'),
     mode    => 'a+x',
   }
 
-  file { "/usr/local//bin/goupdate.sh":
+  file { "/usr/local/bin/goupdate.sh":
     content => template('golang/goupdate.sh.erb'),
     mode    => 'a+x',
     require => File["/usr/local/env.d/20-go.sh"]
   }
 
   exec { 'update-libs':
-    command => "bash -c '. /usr/local/env.d/20-go.sh && /usr/local//bin/goupdate.sh'",
+    command => "bash -c '. /usr/local/env.d/20-go.sh && /usr/local/bin/goupdate.sh'",
     
     onlyif  => [
       "which go",
