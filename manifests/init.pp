@@ -35,7 +35,7 @@ class golang (
   }
 
   Exec {
-    path => "${::boxen_home}/go/bin:/usr/local/bin:/usr/bin:/bin",
+    path => "/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin",
   }
 
   if ! defined(Package['curl']) {
@@ -48,53 +48,53 @@ class golang (
 
   exec { 'download':
     command => "curl -o ${download_dir}/go-${version}.tar.gz ${download_location}",
-    environment => ["GOROOT=${::boxen_home}/go"],
+    environment => ["GOROOT=/usr/local/go"],
     creates => "${download_dir}/go-${version}.tar.gz",
     unless  => "which go && go version | grep ' go${version} '",
     require => Package['curl'],
   } ->
   exec { 'unarchive':
-    command => "tar -C ${::boxen_home} -xzf ${download_dir}/go-${version}.tar.gz && rm ${download_dir}/go-${version}.tar.gz",
+    command => "tar -C /usr/local/ -xzf ${download_dir}/go-${version}.tar.gz && rm ${download_dir}/go-${version}.tar.gz",
     onlyif  => "test -f ${download_dir}/go-${version}.tar.gz",
   }
 
   exec { 'remove-chgo':
-    command => "rm -r ${::boxen_home}/chgo;rm -f ${::boxen_home}/env.d/30_go.sh ${::boxen_home}/env.d/99_chgo_auto.sh",
+    command => "rm -r /usr/local//chgo;rm -f /usr/local//env.d/30_go.sh /usr/local//env.d/99_chgo_auto.sh",
     onlyif  => [
-      "test -d ${::boxen_home}/chgo",
+      "test -d /usr/local//chgo",
     ],
   }
 
   exec { 'remove-previous':
-    command => "rm -rf ${::boxen_home}/go",
+    command => "rm -rf /usr/local/go",
     onlyif  => [
-      "test -d ${::boxen_home}/go",
+      "test -d /usr/local/go",
       "which go && test `go version | cut -d' ' -f 3` != 'go${version}'",
     ],
     before  => Exec['unarchive'],
   }
 
 
-  file { "${::boxen_home}/env.d/20-go.sh":
+  file { "/usr/local//env.d/20-go.sh":
     content => template('golang/golang.sh.erb'),
     mode    => 'a+x',
   }
 
-  file { "${::boxen_home}/bin/goupdate.sh":
+  file { "/usr/local//bin/goupdate.sh":
     content => template('golang/goupdate.sh.erb'),
     mode    => 'a+x',
-    require => File["${::boxen_home}/env.d/20-go.sh"]
+    require => File["/usr/local//env.d/20-go.sh"]
   }
 
   exec { 'update-libs':
-    command => "bash -c '. ${::boxen_home}/env.d/20-go.sh && ${::boxen_home}/bin/goupdate.sh'",
+    command => "bash -c '. /usr/local//env.d/20-go.sh && /usr/local//bin/goupdate.sh'",
     
     onlyif  => [
       "which go",
-      "test -f ${::boxen_home}/bin/goupdate.sh",
-      "test -f ${::boxen_home}/env.d/20-go.sh",
+      "test -f /usr/local//bin/goupdate.sh",
+      "test -f /usr/local//env.d/20-go.sh",
     ],
     logoutput => true,
-    require => File["${::boxen_home}/bin/goupdate.sh"]
+    require => File["/usr/local//bin/goupdate.sh"]
   }
 }
