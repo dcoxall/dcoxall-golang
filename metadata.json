@@ -1,0 +1,11 @@
+{
+  "name": "dcoxall-golang",
+  "version": "1.1.1",
+  "author": "Darren Coxall",
+  "license": "MIT",
+  "summary": "A barebones Go installation",
+  "source": "https://github.com/dcoxall/dcoxall-golang",
+  "dependencies": [
+    { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.1.0 < 5.0.0" }
+  ]
+}
