@@ -12,7 +12,7 @@
 # Darren Coxall <darren@darrencoxall.com>
 #
 class golang (
-  $version      = '1.1.2',
+  $version      = '1.7.3',
   $workspace    = '/vagrant',
   $arch         = 'linux-amd64',
   $download_dir = '/usr/local/src',

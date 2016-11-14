@@ -43,6 +43,16 @@ This represents the url in which to download the golang tarball. The default url
 ## Contributions
 This module is fairly young and has only been tested on Debian. All contributions are welcome by forking the project and creating a pull request with your changes.
 
+## Testing
+When contributing please add a test to confirm everything still works fine.
+
+    git clone <URL> golang
+    # you will also need to puppet module install -i . <dependencies>
+    cd golang
+    for i in tests/*; do; puppet apply --test --noop --modulepath=.. "$i"; done
+
+The testing is only basic, just ensure the right steps are still executed.
+
 ## Roadmap
 There are still additional features which would make this module better:
 
